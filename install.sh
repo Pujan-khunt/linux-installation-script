@@ -3,9 +3,11 @@
 # Strict mode for shell scripts prevents inconsistent install state.
 set -eEo pipefail
 
-INSTALL_DIR="$HOME/archlinux"
+# Set installation directory to where this script is located.
+INSTALL_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 mkdir -p "$INSTALL_DIR"
 
+# Source all necessary modules
 source "$INSTALL_DIR/modules/logging.sh"
 source "$INSTALL_DIR/modules/sudoers.sh"
 source "$INSTALL_DIR/modules/master-cleanup.sh"
@@ -15,7 +17,5 @@ info "Starting setup..."
 ask_sudo
 
 info "Package installation starts..."
-
-false
 
 success "Installation completed."

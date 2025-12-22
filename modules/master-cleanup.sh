@@ -1,9 +1,17 @@
+CLEANUP_DONE=0
+
 # Create a global hashmap for storing error information.
 declare -gA ERROR_DETAILS
 
 master_cleanup() {
   # Retrieve the exit code of the failed process.
   local exit_code=${?:-0}
+
+  # Ensure master cleanup is only run once.
+  if [[ $CLEANUP_DONE -eq 1 ]]; then
+    return
+  fi
+  CLEANUP_DONE=1
 
   # Capture error details
   ERROR_DETAILS[code]=${exit_code}

@@ -25,16 +25,16 @@ _log() {
   printf "${timestamp} ${color}[${level}]${RESET} $message\n"
 
   # Log to log file in a padded format without colors.
-  printf "${timestamp} [${level}]${padding} $message\n" >> "$LOG_FILE"
+  printf "${timestamp} [${level}]${padding} $message\n" >>"$LOG_FILE"
 }
 
 # Public logging functions
 # Usage: info|success|warn|error <message>
-info()    { _log "$BLUE" "INFO" "$1" " "; }
+info() { _log "$BLUE" "INFO" "$1" " "; }
 success() { _log "$GREEN" "OK" "$1" "   "; }
-warn()    { _log "$YELLOW" "WARN" "$1" " "; }
-error()   { _log "$RED" "ERROR" "$1" ""; }
+warn() { _log "$YELLOW" "WARN" "$1" " "; }
+error() { _log "$RED" "ERROR" "$1" ""; }
 
 # Create/empty-out log file.
-: > "$LOG_FILE"
+: >"$LOG_FILE"
 info "Logging initialized. Saving all logs to $LOG_FILE"
