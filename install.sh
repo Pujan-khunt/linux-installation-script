@@ -8,11 +8,14 @@ mkdir -p "$INSTALL_DIR"
 
 source "$INSTALL_DIR/modules/logging.sh"
 source "$INSTALL_DIR/modules/sudoers.sh"
+source "$INSTALL_DIR/modules/master-cleanup.sh"
 
 info "Starting setup..."
 
 ask_sudo
 
 info "Package installation starts..."
+
+false
 
 success "Installation completed."

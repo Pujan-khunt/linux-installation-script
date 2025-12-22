@@ -1,3 +1,10 @@
+sudo_cleanup() {
+  # Kill sudo refresher background process, if running.
+  if [[ -n $SUDO_REFRESHER_PID ]]; then
+    kill "$SUDO_REFRESHER_PID" 2>/dev/null || true
+  fi
+}
+
 _refresh_sudo() {
   while true; do
     # Non-interactively refresh sudo cache.
@@ -24,9 +31,6 @@ ask_sudo() {
 
     # Store PID before it is overwritten.
     SUDO_REFRESHER_PID=$!
-
-    # Kill the sudo refresher process either when the script exits successfully or by force by the user.
-    trap 'kill $SUDO_REFRESHER_PID 2>/dev/null || true' EXIT INT
 
     success "Sudo privileges acquired."
   else
