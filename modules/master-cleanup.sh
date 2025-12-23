@@ -20,13 +20,14 @@ master_cleanup() {
   ERROR_DETAILS[file]=${BASH_SOURCE}
   ERROR_DETAILS[time]=$(date "+%Y-%m-%d %H:%M:%S")
 
-  # Log error for failed commands
+  # Handle error
   if [[ $exit_code -ne 0 ]]; then
     error "'${ERROR_DETAILS[cmd]}' failed at line ${ERROR_DETAILS[line]} in ${ERROR_DETAILS[file]} (code: $exit_code)"
   fi
 
   # Other cleanup functions
   sudo_cleanup
+  log_crash_report
 
   info "Master cleanup completed."
 }

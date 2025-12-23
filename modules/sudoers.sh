@@ -1,7 +1,15 @@
 sudo_cleanup() {
-  # Kill sudo refresher background process, if running.
   if [[ -n $SUDO_REFRESHER_PID ]]; then
+    # Kill sudo refresher
     kill "$SUDO_REFRESHER_PID" 2>/dev/null || true
+
+    if [[ ${ERROR_DETAILS[code]} -ne 0 ]]; then
+      warn "Sudo refresher killed due to error."
+    else
+      success "Sudo refresher killed due to successfull script completion."
+    fi
+  else
+    warn "Sudo refresher process doesn't exist."
   fi
 }
 
@@ -28,6 +36,7 @@ ask_sudo() {
 
     # Run sudo refresher as a background process.
     _refresh_sudo &
+    info "Sudo refresher spawned."
 
     # Store PID before it is overwritten.
     SUDO_REFRESHER_PID=$!
